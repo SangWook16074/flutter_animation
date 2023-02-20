@@ -8,9 +8,15 @@ class DraggableCard extends StatefulWidget {
   _DraggableCardState createState() => _DraggableCardState();
 }
 
-class _DraggableCardState extends State<DraggableCard> {
+class _DraggableCardState extends State<DraggableCard>
+    with SingleTickerProviderStateMixin {
+  late AnimationController _controller;
+  Alignment _dragAlignment = Alignment.center;
+
   @override
   void initState() {
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
     super.initState();
   }
 
@@ -21,9 +27,22 @@ class _DraggableCardState extends State<DraggableCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Align(
-      child: Card(
-        child: widget.child,
+    var size = MediaQuery.of(context).size;
+    return GestureDetector(
+      onPanDown: (details) {},
+      onPanUpdate: (details) {
+        setState(() {
+          _dragAlignment += Alignment(
+            details.delta.dx / (size.width / 2),
+            details.delta.dy / (size.height / 2),
+          );
+        });
+      },
+      onPanEnd: (details) {},
+      child: Align(
+        child: Card(
+          child: widget.child,
+        ),
       ),
     );
   }

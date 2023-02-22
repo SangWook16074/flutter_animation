@@ -3,10 +3,10 @@ import 'package:flutter/physics.dart';
 
 class DraggableCard extends StatefulWidget {
   final Widget child;
-  const DraggableCard({required this.child});
+  const DraggableCard({super.key, required this.child});
 
   @override
-  _DraggableCardState createState() => _DraggableCardState();
+  State<DraggableCard> createState() => _DraggableCardState();
 }
 
 class _DraggableCardState extends State<DraggableCard>
